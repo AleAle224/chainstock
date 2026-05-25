@@ -1,0 +1,109 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type WatchlistEntry = 
+ record {
+   addedAt: Time;
+   company: text;
+   symbol: text;
+ };
+type UserProfile = 
+ record {
+   country: text;
+   createdAt: Time;
+   hasCompletedOnboarding: bool;
+   investmentGoals: text;
+   preferredIndustry: text;
+   riskTolerance: text;
+ };
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Time = int;
+type SearchResult = 
+ record {
+   description: text;
+   displaySymbol: text;
+   symbol: text;
+   "type": text;
+ };
+type QuoteResult = 
+ record {
+   change: float64;
+   changePercent: float64;
+   price: float64;
+ };
+type NewsItem = 
+ record {
+   category: text;
+   headline: text;
+   image: text;
+   source: text;
+   summary: text;
+   url: text;
+ };
+type CompanyProfileResult = 
+ record {
+   currency: text;
+   exchange: text;
+   logo: text;
+   marketCap: float64;
+   name: text;
+ };
+type AlertCondition = 
+ variant {
+   Above;
+   Below;
+ };
+type Alert = 
+ record {
+   active: bool;
+   condition: AlertCondition;
+   createdAt: Time;
+   expiresAt: Time;
+   id: nat;
+   seen: bool;
+   symbol: text;
+   targetPrice: float64;
+   triggered: bool;
+ };
+service : {
+  addToWatchlist: (symbol: text, company: text) -> ();
+  createAlert: (symbol: text, targetPrice: float64, condition:
+   AlertCondition) -> (Alert);
+  deleteAlert: (alertId: nat) -> ();
+  finnhubTransform: (args: TransformationInput) ->
+   (TransformationOutput) query;
+  getCompanyNews: (symbol: text, fromDate: text, toDate: text) ->
+   (vec NewsItem);
+  getCompanyProfile: (symbol: text) -> (CompanyProfileResult);
+  getMyAlerts: () -> (vec Alert) query;
+  getMyProfile: () -> (opt UserProfile) query;
+  getMyTriggeredAlerts: () -> (vec Alert) query;
+  getMyWatchlist: () -> (vec WatchlistEntry) query;
+  getQuote: (symbol: text) -> (QuoteResult);
+  hasCompletedOnboarding: () -> (bool) query;
+  isInWatchlist: (symbol: text) -> (bool) query;
+  markAlertSeen: (alertId: nat) -> ();
+  removeFromWatchlist: (symbol: text) -> ();
+  saveProfile: (profile: UserProfile) -> ();
+  searchStocks: (searchQuery: text) -> (vec SearchResult);
+  setFinnhubKey: (key: text) -> ();
+  toggleAlert: (alertId: nat, active: bool) -> ();
+}

@@ -1,0 +1,26 @@
+{
+  "overview": "ChainStock is a fully onchain stock watchlist and price alert app powered by the Internet Computer, with live Finnhub data, TradingView charts, and Internet Identity authentication.",
+  "features": [
+    "Internet Identity sign-in — no passwords, no accounts",
+    "Personal watchlist with live prices, change %, and market cap",
+    "Price alerts with automatic 5-minute checking and triggered notifications",
+    "TradingView charts and widgets on stock detail pages",
+    "Command palette search with debounced Finnhub results",
+    "Market heatmap and news feed on the dashboard",
+    "Optional onboarding flow with Skip for now on every step",
+    "Triggered alert toasts on app load — auto-dismiss after 6 seconds",
+    "Full dark theme with teal accent color"
+  ],
+  "category": "finance",
+  "tags": [
+    "stocks",
+    "watchlist",
+    "alerts",
+    "finance",
+    "onchain",
+    "internet-computer",
+    "tradingview",
+    "finnhub"
+  ],
+  "last_updated": "2026-05-25T07:25:35.231Z"
+}

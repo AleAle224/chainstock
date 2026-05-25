@@ -1,0 +1,90 @@
+// Version: 1.0.0
+type AlertCondition__403631879 = {#Above; #Below};
+type Alert__607610635 =
+  {
+    active : Bool;
+    condition : AlertCondition__403631879;
+    createdAt : Time__900049286;
+    expiresAt : Time__900049286;
+    id : Nat;
+    seen : Bool;
+    symbol : Text;
+    targetPrice : Float;
+    triggered : Bool
+  };
+type CompanyProfileResult__505906473 =
+  {
+    currency : Text;
+    exchange : Text;
+    logo : Text;
+    marketCap : Float;
+    name : Text
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type SearchResult__782627770 =
+  {description : Text; displaySymbol : Text; symbol : Text; type_ : Text};
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type UserId__158757552 = Principal;
+type UserProfile__446616884 =
+  {
+    country : Text;
+    createdAt : Time__900049286;
+    hasCompletedOnboarding : Bool;
+    investmentGoals : Text;
+    preferredIndustry : Text;
+    riskTolerance : Text
+  };
+type WatchlistEntry__727695593 =
+  {addedAt : Time__900049286; company : Text; symbol : Text};
+actor {
+  stable PROFILE_TTL : Int;
+  stable SEARCH_TTL : Int;
+  stable alertMap :
+    {
+      var root :
+        Node__46230540<UserId__158757552, List__415060402<Alert__607610635>>;
+      var size : Nat__490723111
+    };
+  stable alertState : {var nextAlertId : Nat};
+  stable finnhubState : {var key : Text};
+  stable profileCache :
+    {
+      var root : Node__46230540<Text, (CompanyProfileResult__505906473, Int)>;
+      var size : Nat__490723111
+    };
+  stable profiles :
+    {
+      var root : Node__46230540<UserId__158757552, UserProfile__446616884>;
+      var size : Nat__490723111
+    };
+  stable searchCache :
+    {
+      var root : Node__46230540<Text, ([SearchResult__782627770], Int)>;
+      var size : Nat__490723111
+    };
+  stable watchlists :
+    {
+      var root :
+        Node__46230540<UserId__158757552,
+                        List__415060402<WatchlistEntry__727695593>>;
+      var size : Nat__490723111
+    }
+};
